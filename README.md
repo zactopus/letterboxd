@@ -14,7 +14,7 @@ npm install letterboxd --save
 
 ## usage
 
-### function(username, [callback])
+### function(username, [format], [callback])
 
 Returns a promise if no callback is provided.
 
@@ -22,6 +22,18 @@ Returns a promise if no callback is provided.
 import letterboxd from "letterboxd";
 
 letterboxd("rubencordeiro")
+  .then((items) => console.log(items))
+  .catch((error) => console.log(error));
+```
+
+#### format
+
+Pass “markdown” as the optional `format` parameter for Markdown output in each film’s review.
+
+```javascript
+import letterboxd from "letterboxd";
+
+letterboxd("rubencordeiro", "markdown")
   .then((items) => console.log(items))
   .catch((error) => console.log(error));
 ```
@@ -50,7 +62,7 @@ items of note for the list type:
       image: { tiny: "...", small: "...", medium: "...", large: "..." },
     },
     rating: { text: "★★★★", score: 4 },
-    review: "proper cute, funny and interesting through out. ...",
+    review: "proper cute, funny and interesting through out. Co-directed by Byron Howard, who also directed Tangled.",
     spoilers: false,
     isRewatch: false,
     date: { watched: 1463702400000, published: 1463784779000 },
@@ -84,3 +96,25 @@ items of note for the list type:
   //...
 ];
 ```
+
+If “markdown” is passed as the format parameter then HTML elements in the review text will be converted to Markdown:
+
+```javascript
+[
+  {
+    type: "diary",
+    film: {
+      title: "Zootopia",
+      year: "2016",
+      image: { tiny: "...", small: "...", medium: "...", large: "..." },
+    },
+    rating: { text: "★★★★", score: 4 },
+    review: "_proper_ cute, funny and interesting through out. Co-directed by Byron Howard, who also directed [Tangled](https://letterboxd.com/film/tangled-2010/).",
+    spoilers: false,
+    isRewatch: false,
+    date: { watched: 1463702400000, published: 1463784779000 },
+    uri: "https://letterboxd.com/zoetrope69/film/zootopia/",
+  },
+  //...
+```
+
